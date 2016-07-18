@@ -82,13 +82,25 @@ class State(object):
 
         autopush (bool): whether certain functions automatically push to the server
 
+        get_arguments (dict): dictionary of GET url parameters. Each entry
+            contains a list of values
+
     """
 
     def __init__(self):
+        self._get_arguments = {}
         # TODO (havocp) right now there's no way to turn off autoadd
         self._autoadd = True
         self.last_comms_handle = None
         self.reset()
+
+    @property
+    def get_arguments(self):
+        return self._get_arguments
+
+    @get_arguments.setter
+    def get_arguments(self, args):
+        self._get_arguments = args
 
     @property
     def document(self):

@@ -9,6 +9,7 @@ log = logging.getLogger(__name__)
 from tornado import gen
 
 from bokeh.embed import server_html_page_for_session
+from bokeh.io import curstate
 
 from .session_handler import SessionHandler
 
@@ -24,6 +25,7 @@ class DocHandler(SessionHandler):
 
     @gen.coroutine
     def get(self, *args, **kwargs):
+        curstate().get_arguments = self.request.arguments
         session = yield self.get_session()
 
         websocket_url = self.application.websocket_url_for_request(self.request, self.bokeh_websocket_path)
